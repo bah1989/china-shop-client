@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { supabase, FUNCTIONS_URL } from './supabaseClient'
+import { supabase, FUNCTIONS_URL } from './src/supabaseClient'
 const COLORS = {
 emerald: '#0A5C36',
 emeraldDark: '#173404',
