@@ -234,10 +234,16 @@ goCart={() => setView('cart')}
 search={search}
 setSearch={setSearch}
 selectedProduct={selectedProduct}
-setSelectedProduct={setSelectedProduct}
-/>
-)}
-{view === 'cart' && (
+            setSelectedProduct={setSelectedProduct}
+            onMyOrders={() => setView('myorders')}
+          />
+        )}
+
+        {view === 'myorders' && (
+          <MyOrdersScreen onBack={() => setView('catalog')} />
+        )}
+
+        {view === 'cart' && (
 <CartScreen
 cartLines={cartLines}
 itemsCount={itemsCount}
