@@ -329,10 +329,10 @@ style={{ background: '#F1F3F1', border: 'none', borderRadius: 20, padding: '6px 
     </div>
   )
 }
-function CatalogScreen({ communes, commune, setCommune, products, cart, itemsCount, total, addToCart, goCart, search, setSearch, selectedProduct, setSelectedProduct }) {
-return (
-<div>
-<TopBar communes={communes} commune={commune} setCommune={setCommune} />
+function CatalogScreen({ communes, commune, setCommune, products, cart, itemsCount, total, addToCart, goCart, search, setSearch, selectedProduct, setSelectedProduct, onMyOrders }) {
+  return (
+    <div>
+      <TopBar communes={communes} commune={commune} setCommune={setCommune} onMyOrders={onMyOrders} />
 <div style={{ padding: '12px 12px 0' }}>
 <div style={{ background: COLORS.card, border: `1px solid ${COLORS.border}`, borderRadius: 12, padding: '10px 12px', display: 'flex', alignItems: 'center', gap: 8 }}>
 <span style={{ fontSize: 14, color: COLORS.textFaint }}>🔍</span>
