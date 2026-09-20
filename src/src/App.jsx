@@ -695,6 +695,109 @@ style={{ width: '100%', background: COLORS.orange, color: '#fff', textAlign: 'ce
 </div>
 )
 }
+const STATUS_LABELS_CLIENT = {
+  pending: 'En attente',
+  validated: 'Validée',
+  grouped: 'Regroupée',
+  dispatched: 'En livraison',
+  delivered: 'Livrée',
+  cancelled: 'Annulée',
+}
+
+function MyOrdersScreen({ onBack }) {
+  const [phone, setPhone] = useState('')
+  const [orders, setOrders] = useState(null)
+  const [busy, setBusy] = useState(false)
+  const [error, setError] = useState(null)
+
+  async function lookup(e) {
+    e.preventDefault()
+    if (!phone.trim()) return
+    setBusy(true)
+    setError(null)
+    try {
+      const resp = await fetch(`${FUNCTIONS_URL}/customer-orders`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone: phone.trim() }),
+      })
+      const result = await resp.json()
+      if (result.error) throw new Error(result.error)
+      setOrders(result.orders || [])
+    } catch (e) {
+      setError(e.message || String(e))
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  return (
+    <div>
+      <div style={{ background: COLORS.card, display: 'flex', alignItems: 'center', gap: 10, padding: '14px 16px', borderBottom: `1px solid ${COLORS.border}` }}>
+        <span onClick={onBack} style={{ cursor: 'pointer' }}>←</span>
+        <span style={{ fontSize: 15, fontWeight: 600 }}>Mes commandes</span>
+      </div>
+
+      <form onSubmit={lookup} style={{ padding: '16px 16px 0' }}>
+        <p style={{ margin: '0 0 6px', fontSize: 12, color: COLORS.textMuted }}>Entrez le numéro de téléphone utilisé pour vos commandes</p>
+        <div style={{ display: 'flex', gap: 8 }}>
+          <input
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            placeholder="07 XX XX XX XX"
+            style={{ flex: 1, fontSize: 13, padding: '10px 12px', borderRadius: 10, border: `1px solid ${COLORS.border}`, boxSizing: 'border-box' }}
+          />
+          <button
+            type="submit"
+            disabled={busy}
+            style={{ background: COLORS.orange, color: '#fff', border: 'none', borderRadius: 10, padding: '0 16px', fontSize: 13, fontWeight: 600, opacity: busy ? 0.6 : 1 }}
+          >
+            {busy ? '…' : 'Voir'}
+          </button>
+        </div>
+        {error && <p style={{ margin: '10px 0 0', fontSize: 12, color: '#C0392B' }}>{error}</p>}
+      </form>
+
+      <div style={{ padding: '16px 16px 24px', display: 'flex', flexDirection: 'column', gap: 10 }}>
+        {orders !== null && orders.length === 0 && (
+          <p style={{ fontSize: 13, color: COLORS.textFaint, textAlign: 'center', padding: '20px 0' }}>Aucune commande trouvée pour ce numéro</p>
+        )}
+        {orders?.map((o) => {
+          const isExpedition = o.delivery_type === 'expedition'
+          const isExpress = o.delivery_type === 'express'
+          const destination = isExpedition ? o.villes?.name : o.communes?.name
+          const itemsNames = (o.order_items || []).map((it) => it.products?.name).filter(Boolean).join(', ')
+          return (
+            <div key={o.id} style={{ background: COLORS.card, borderRadius: 14, border: `1px solid ${COLORS.border}`, padding: 14 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
+                <span style={{ fontSize: 12, fontWeight: 600, color: isExpedition ? '#1E88E5' : isExpress ? COLORS.orange : COLORS.emerald }}>
+                  {isExpedition ? `🚚 Expédition${destination ? ` — ${destination}` : ''}` : isExpress ? '⚡ Express' : '📦 Standard'}
+                </span>
+                <span style={{ fontSize: 11, color: COLORS.textFaint }}>
+                  {new Date(o.created_at).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' })}
+                </span>
+              </div>
+              {itemsNames && (
+                <p style={{ margin: '0 0 6px', fontSize: 12, color: COLORS.textMuted, lineHeight: 1.4 }}>{itemsNames}</p>
+              )}
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span style={{ fontSize: 15, fontWeight: 600, color: '#2C2C2A' }}>{Number(o.total_amount).toLocaleString('fr-FR')} FCFA</span>
+                <span style={{
+                  fontSize: 11, fontWeight: 600, padding: '4px 10px', borderRadius: 10,
+                  background: o.status === 'delivered' ? '#EAF3DE' : o.status === 'cancelled' ? '#FFF0EE' : '#FFF3E0',
+                  color: o.status === 'delivered' ? COLORS.emerald : o.status === 'cancelled' ? '#C0392B' : '#8A4B00',
+                }}>
+                  {STATUS_LABELS_CLIENT[o.status] || o.status}
+                </span>
+              </div>
+            </div>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
 function TrackingScreen({ total, deliveryType, expressDistanceKm, villeName, onNewOrder }) {
 const isExpress = deliveryType === 'express'
 const isExpedition = deliveryType === 'expedition'
