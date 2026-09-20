@@ -320,11 +320,14 @@ style={{ background: '#F1F3F1', border: 'none', borderRadius: 20, padding: '6px 
 >
 {communes.map((c) => (
 <option key={c.id} value={c.id}>📍 {c.name}</option>
-))}
+))
 </select>
-)}
-</div>
-)
+ ))}
+        </select>
+      )}
+      </div>
+    </div>
+  )
 }
 function CatalogScreen({ communes, commune, setCommune, products, cart, itemsCount, total, addToCart, goCart, search, setSearch, selectedProduct, setSelectedProduct }) {
 return (
