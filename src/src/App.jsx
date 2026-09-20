@@ -306,11 +306,13 @@ return (
 </div>
 )
 }
-function TopBar({ communes, commune, setCommune }) {
-return (
-<div style={{ background: COLORS.card, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 16px', borderBottom: `1px solid ${COLORS.border}` }}>
-<span style={{ fontSize: 16, fontWeight: 600, color: COLORS.emerald }}>China Shop</span>
-{communes.length > 0 && (
+function TopBar({ communes, commune, setCommune, onMyOrders }) {
+  return (
+    <div style={{ background: COLORS.card, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 16px', borderBottom: `1px solid ${COLORS.border}` }}>
+      <span style={{ fontSize: 16, fontWeight: 600, color: COLORS.emerald }}>China Shop</span>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+      <span onClick={onMyOrders} style={{ fontSize: 12, color: COLORS.emerald, fontWeight: 600, cursor: 'pointer' }}>📦 Mes commandes</span>
+      {communes.length > 0 && (
 <select
 value={commune?.id || ''}
 onChange={(e) => setCommune(communes.find((c) => c.id === e.target.value))}
