@@ -449,6 +449,8 @@ onAdd={(qty) => addToCart(selectedProduct.id, qty)}
 }
 function ProductDetailModal({ product, cartQty, onClose, onAdd }) {
 const [qty, setQty] = useState(1)
+const [imgIndex, setImgIndex] = useState(0)
+const images = product.image_urls?.length ? product.image_urls : (product.image_url ? [product.image_url] : [])
 return (
 <div
 onClick={onClose}
@@ -458,9 +460,36 @@ style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.45)', display: '
 onClick={(e) => e.stopPropagation()}
 style={{ background: COLORS.bg, borderRadius: '20px 20px 0 0', width: '100%', maxWidth: 420, margin: '0 auto', maxHeight: '85vh', overflowY: 'auto', paddingBottom: 20 }}
 >
-<div style={{ position: 'relative', background: '#F1F3F1', height: 180, borderRadius: '20px 20px 0 0' }}>
-{product.image_url && (
-<img src={product.image_url} alt={product.name} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '20px 20px 0 0' }} />
+<div style={{ position: 'relative', background: '#F1F3F1', height: 220, borderRadius: '20px 20px 0 0' }}>
+{images.length > 0 && (
+<img src={images[imgIndex]} alt={product.name} style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: '20px 20px 0 0' }} />
+)}
+{images.length > 1 && (
+<div style={{ position: 'absolute', bottom: 10, left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: 6 }}>
+{images.map((_, i) => (
+<span
+key={i}
+onClick={(e) => { e.stopPropagation(); setImgIndex(i) }}
+style={{ width: 7, height: 7, borderRadius: '50%', background: i === imgIndex ? COLORS.emerald : 'rgba(0,0,0,0.2)', cursor: 'pointer' }}
+/>
+))}
+</div>
+)}
+{images.length > 1 && (
+<>
+<span
+onClick={(e) => { e.stopPropagation(); setImgIndex((i) => (i - 1 + images.length) % images.length) }}
+style={{ position: 'absolute', top: '50%', left: 8, transform: 'translateY(-50%)', width: 28, height: 28, borderRadius: '50%', background: 'rgba(255,255,255,0.9)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', fontSize: 14 }}
+>
+‹
+</span>
+<span
+onClick={(e) => { e.stopPropagation(); setImgIndex((i) => (i + 1) % images.length) }}
+style={{ position: 'absolute', top: '50%', right: 8, transform: 'translateY(-50%)', width: 28, height: 28, borderRadius: '50%', background: 'rgba(255,255,255,0.9)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', fontSize: 14 }}
+>
+›
+</span>
+</>
 )}
 <button
 onClick={onClose}
@@ -469,6 +498,9 @@ style={{ position: 'absolute', top: 12, left: 12, width: 30, height: 30, borderR
 >
 ✕
 </button>
+
+
+
 <button
 onClick={() => shareProduct(product)}
 aria-label={`Partager ${product.name}`}
