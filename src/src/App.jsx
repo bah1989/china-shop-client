@@ -463,7 +463,12 @@ style={{ background: COLORS.bg, borderRadius: '20px 20px 0 0', width: '100%', ma
 >
 <div style={{ position: 'relative', background: '#F1F3F1', height: 220, borderRadius: '20px 20px 0 0' }}>
 {images.length > 0 && (
-<img src={images[imgIndex]} alt={product.name} style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: '20px 20px 0 0' }} />
+<img
+onClick={(e) => { e.stopPropagation(); setFullscreen(true) }}
+src={images[imgIndex]}
+alt={product.name}
+style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: '20px 20px 0 0', cursor: 'pointer' }}
+/>
 )}
 {images.length > 1 && (
 <div style={{ position: 'absolute', bottom: 10, left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: 6 }}>
