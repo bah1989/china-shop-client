@@ -566,12 +566,47 @@ style={{ width: '100%', marginTop: 14, background: COLORS.orange, color: '#fff',
 >
 Ajouter {qty} au panier{cartQty > 0 ? ` (${cartQty} déjà ajouté${cartQty > 1 ? 's' : ''})` : ''}
 </button>
+ </div>
 </div>
+{fullscreen && (
+<div
+onClick={() => setFullscreen(false)}
+style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.95)', zIndex: 100, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+>
+<img
+src={images[imgIndex]}
+alt={product.name}
+style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}
+/>
+<button
+onClick={() => setFullscreen(false)}
+aria-label="Fermer"
+style={{ position: 'absolute', top: 16, right: 16, width: 36, height: 36, borderRadius: '50%', background: 'rgba(255,255,255,0.15)', border: 'none', color: '#fff', fontSize: 18 }}
+>
+✕
+</button>
+{images.length > 1 && (
+<>
+<span
+onClick={(e) => { e.stopPropagation(); setImgIndex((i) => (i - 1 + images.length) % images.length) }}
+style={{ position: 'absolute', top: '50%', left: 16, transform: 'translateY(-50%)', width: 36, height: 36, borderRadius: '50%', background: 'rgba(255,255,255,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', fontSize: 20, color: '#fff' }}
+>
+‹
+</span>
+<span
+onClick={(e) => { e.stopPropagation(); setImgIndex((i) => (i + 1) % images.length) }}
+style={{ position: 'absolute', top: '50%', right: 16, transform: 'translateY(-50%)', width: 36, height: 36, borderRadius: '50%', background: 'rgba(255,255,255,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', fontSize: 20, color: '#fff' }}
+>
+›
+</span>
+</>
+)}
 </div>
+)}
 </div>
 )
 }
-function CartScreen({ cartLines, itemsCount, tier, subtotal, total, addToCart, decFromCart, onBack, onValidate, busy, deliveryType, setDeliveryType, locating, deliveryPhone, setDeliveryPhone, deliveryAddress, setDeliveryAddress, villes, ville, setVille }) {
+function CartScreen({ cartLines,itemsCount, tier, subtotal, total, addToCart, decFromCart, onBack, onValidate, busy, deliveryType, setDeliveryType, locating, deliveryPhone, setDeliveryPhone, deliveryAddress, setDeliveryAddress, villes, ville, setVille }) {
 const gaugePct = Math.min(100, (itemsCount / 5) * 100)
 const vip = itemsCount >= 5
 return (
