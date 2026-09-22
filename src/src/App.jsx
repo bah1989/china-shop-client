@@ -450,6 +450,7 @@ onAdd={(qty) => addToCart(selectedProduct.id, qty)}
 function ProductDetailModal({ product, cartQty, onClose, onAdd }) {
 const [qty, setQty] = useState(1)
 const [imgIndex, setImgIndex] = useState(0)
+const [fullscreen, setFullscreen] = useState(false)
 const images = product.image_urls?.length ? product.image_urls : (product.image_url ? [product.image_url] : [])
 return (
 <div
