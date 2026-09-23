@@ -380,7 +380,7 @@ Plus vous achetez groupé, plus le prix et la livraison s'effondrent
 {products.map((p) => (
 <div
 key={p.id}
-onClose={() => window.history.back()}
+onClick={() => { setSelectedProduct(p); window.history.pushState({ product: p.id }, '', `?p=${p.id}`) }}
 style={{ background: COLORS.card, borderRadius: 16, border: `1px solid ${COLORS.border}`, padding: 10, cursor: 'pointer' }}
 >
 <div style={{ position: 'relative', background: '#F1F3F1', borderRadius: 10, height: 72, marginBottom: 8, overflow: 'hidden' }}>
