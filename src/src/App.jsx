@@ -457,7 +457,7 @@ Voir mon panier
 <ProductDetailModal
 product={selectedProduct}
 cartQty={cart[selectedProduct.id] || 0}
-onClose={() => { setSelectedProduct(null); window.history.replaceState(null, '', window.location.pathname) }}
+onClose={() => window.history.back()}
 onAdd={(qty) => addToCart(selectedProduct.id, qty)}
 />
 )}
