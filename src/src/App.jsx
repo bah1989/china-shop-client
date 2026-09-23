@@ -86,6 +86,14 @@ setReady(true)
 }
 init()
 }, [])
+ useEffect(() => {
+  function onPopState() {
+    const params = new URLSearchParams(window.location.search)
+    if (!params.get('p')) setSelectedProduct(null)
+  }
+  window.addEventListener('popstate', onPopState)
+  return () => window.removeEventListener('popstate', onPopState)
+}, []) 
 const itemsCount = useMemo(() => Object.values(cart).reduce((a, b) => a + b, 0), [cart])
 const tier = tierFor(itemsCount, deliveryType)
 const cartLines = useMemo(() => {
