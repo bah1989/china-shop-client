@@ -52,9 +52,18 @@ setProducts(pData || [])
 const params = new URLSearchParams(window.location.search)
 const productIdFromUrl = params.get('p')
 if (productIdFromUrl) {
-const found = (pData || []).find((p) => p.id === productIdFromUrl)
-if (found) setSelectedProduct(found)
+  const found = (pData || []).find((p) => p.id === productIdFromUrl)
+  if (found) {
+    setSelectedProduct(found)
+    window.history.replaceState(null, '', window.location.pathname)
+    window.history.pushState({ product: found.id }, '', `?p=${found.id}`)
+  }
 }
+
+
+
+
+
 let { data: authData } = await supabase.auth.getSession()
 let currentSession = authData?.session
 if (!currentSession) {
