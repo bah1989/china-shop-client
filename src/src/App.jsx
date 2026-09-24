@@ -261,9 +261,13 @@ goCart={() => setView('cart')}
 search={search}
 setSearch={setSearch}
 selectedProduct={selectedProduct}
+            selectedProduct={selectedProduct}
             setSelectedProduct={setSelectedProduct}
             onMyOrders={() => setView('myorders')}
+            trustStats={trustStats}
           />
+            
+      
         )}
 
         {view === 'myorders' && (
