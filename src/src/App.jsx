@@ -432,7 +432,14 @@ style={{ position: 'absolute', top: 6, right: 6, width: 26, height: 26, borderRa
 <span style={{ fontSize: 10.5, color: COLORS.textFaint }}>({p.reviewCount} avis)</span>
 </div>
 ) : (
-<StarRating rating={p.rating} />
+{product.reviewCount > 0 ? (
+<div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+<span style={{ fontSize: 14, color: '#FF6B00', fontWeight: 600 }}>★ {product.avgRating}</span>
+<span style={{ fontSize: 12, color: COLORS.textFaint }}>({product.reviewCount} avis)</span>
+</div>
+) : (
+<StarRating rating={product.rating} />
+)}
 )}
 {p.usage_link && (
 
