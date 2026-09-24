@@ -40,6 +40,8 @@ const [locating, setLocating] = useState(false)
 const [selectedProduct, setSelectedProduct] = useState(null)
 const [deliveryPhone, setDeliveryPhone] = useState('')
 const [deliveryAddress, setDeliveryAddress] = useState('')
+const [trustStats, setTrustStats] = useState(null)
+
 useEffect(() => {
 async function init() {
 const { data: cData } = await supabase.from('communes').select('*').order('name')
@@ -48,7 +50,15 @@ setCommune(cData?.[0] || null)
 const { data: vData } = await supabase.from('villes').select('*').eq('is_active', true).order('name')
 setVilles(vData || [])
 const { data: pData } = await supabase.from('products').select('*').eq('is_active', true).order('created_at')
-setProducts(pData || [])
+const { data: statsData } = await supabase.from('product_review_stats').select('*')
+const statsMap = {}
+;(statsData || []).forEach((s) => { statsMap[s.product_id] = s })
+setProducts((pData || []).map((p) => ({ ...p, avgRating: statsMap[p.id]?.avg_rating || null, reviewCount: statsMap[p.id]?.review_count || 0 })))
+fetch(`${FUNCTIONS_URL}/reviews-api`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'trust_stats' }) })
+  .then((r) => r.json())
+  .then(setTrustStats)
+  .catch(() => {})
+
 const params = new URLSearchParams(window.location.search)
 const productIdFromUrl = params.get('p')
 if (productIdFromUrl) {
