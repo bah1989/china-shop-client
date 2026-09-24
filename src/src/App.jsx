@@ -928,9 +928,25 @@ function MyOrdersScreen({ onBack }) {
                   {new Date(o.created_at).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' })}
                 </span>
               </div>
-              {itemsNames && (
-                <p style={{ margin: '0 0 6px', fontSize: 12, color: COLORS.textMuted, lineHeight: 1.4 }}>{itemsNames}</p>
-              )}
+              {(o.order_items || []).length > 0 && (
+<div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 6 }}>
+{o.order_items.map((it) => (
+<div key={it.id}>
+<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
+<span style={{ fontSize: 12, color: COLORS.textMuted }}>{it.products?.name || 'Article'}</span>
+{o.status === 'delivered' && it.already_reviewed && (
+<span style={{ fontSize: 11, color: COLORS.emerald, fontWeight: 600 }}>✔ Noté</span>
+)}
+</div>
+{o.status === 'delivered' && !it.already_reviewed && (
+<ReviewButton orderId={o.id} orderItemId={it.id} productId={it.product_id} />
+)}
+</div>
+))}
+</div>
+)}
+                
+              
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span style={{ fontSize: 15, fontWeight: 600, color: '#2C2C2A' }}>{Number(o.total_amount).toLocaleString('fr-FR')} FCFA</span>
                 <span style={{
