@@ -917,7 +917,7 @@ function MyOrdersScreen({ onBack }) {
           const isExpedition = o.delivery_type === 'expedition'
           const isExpress = o.delivery_type === 'express'
           const destination = isExpedition ? o.villes?.name : o.communes?.name
-          const itemsNames = (o.order_items || []).map((it) => it.products?.name).filter(Boolean).join(', ')
+          
           return (
             <div key={o.id} style={{ background: COLORS.card, borderRadius: 14, border: `1px solid ${COLORS.border}`, padding: 14 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
