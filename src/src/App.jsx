@@ -410,8 +410,10 @@ style={{ background: COLORS.card, borderRadius: 16, border: `1px solid ${COLORS.
 >
 <div style={{ position: 'relative', background: '#F1F3F1', borderRadius: 10, height: 72, marginBottom: 8, overflow: 'hidden' }}>
 {p.image_url && (
-<img src={p.image_url} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+<img src={p.image_url} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#fff' }} />
 )}
+
+
 <button
 onClick={(e) => { e.stopPropagation(); shareProduct(p) }}
 aria-label={`Partager ${p.name}`}
