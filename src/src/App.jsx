@@ -612,6 +612,17 @@ Comment l'utiliser ↗
 </div>
 </div>
 <div style={{ marginTop: 14, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+  {reviews.length > 0 && (
+<div style={{ marginTop: 16, marginBottom: 4, display: 'flex', flexDirection: 'column', gap: 10 }}>
+<p style={{ margin: 0, fontSize: 13, fontWeight: 600, color: COLORS.textMuted }}>Avis clients</p>
+{reviews.map((r, i) => (
+<div key={i} style={{ background: '#F8F9FA', borderRadius: 10, padding: 10 }}>
+<span style={{ fontSize: 12, color: '#FF6B00' }}>{'★'.repeat(r.rating)}{'☆'.repeat(5 - r.rating)}</span>
+{r.comment && <p style={{ margin: '4px 0 0', fontSize: 12.5, color: '#2C2C2A' }}>{r.comment}</p>}
+</div>
+))}
+</div>
+)}
 <span style={{ fontSize: 13, color: COLORS.textMuted }}>Quantité</span>
 <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
 <span
