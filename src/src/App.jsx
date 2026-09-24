@@ -594,8 +594,16 @@ Partager
 </div>
 <div style={{ padding: '16px 16px 0' }}>
 <p style={{ margin: '0 0 6px', fontSize: 17, fontWeight: 600, color: '#2C2C2A' }}>{product.name}</p>
+{product.reviewCount > 0 ? (
+<div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+<span style={{ fontSize: 14, color: '#FF6B00', fontWeight: 600 }}>★ {product.avgRating}</span>
+<span style={{ fontSize: 12, color: COLORS.textFaint }}>({product.reviewCount} avis)</span>
+</div>
+) : (
 <StarRating rating={product.rating} />
+)}
 {product.description && (
+
 <p style={{ margin: '10px 0 0', fontSize: 13, color: COLORS.textMuted, lineHeight: 1.5 }}>{product.description}</p>
 )}
 {product.usage_link && (
