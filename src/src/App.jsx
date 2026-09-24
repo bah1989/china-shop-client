@@ -964,7 +964,70 @@ function MyOrdersScreen({ onBack }) {
     </div>
   )
 }
+function ReviewButton({ orderId, orderItemId, productId }) {
+  const [open, setOpen] = useState(false)
+  const [rating, setRating] = useState(5)
+  const [comment, setComment] = useState('')
+  const [busy, setBusy] = useState(false)
+  const [done, setDone] = useState(false)
+  const [err, setErr] = useState(null)
 
+  async function submit() {
+    setBusy(true)
+    setErr(null)
+    try {
+      const resp = await fetch(`${FUNCTIONS_URL}/reviews-api`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'submit_review', payload: { order_id: orderId, order_item_id: orderItemId, product_id: productId, rating, comment } }),
+      })
+      const result = await resp.json()
+      if (result.error) throw new Error(result.error)
+      setDone(true)
+      setOpen(false)
+    } catch (e) {
+      setErr(e.message || String(e))
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  if (done) {
+    return <span style={{ fontSize: 11, color: COLORS.emerald, fontWeight: 600 }}>✔ Merci pour votre avis</span>
+  }
+
+  if (!open) {
+    return (
+      <button onClick={() => setOpen(true)} style={{ background: 'transparent', border: `1px solid ${COLORS.orange}`, color: COLORS.orange, borderRadius: 8, padding: '4px 10px', fontSize: 11, fontWeight: 600 }}>
+        Laisser un avis
+      </button>
+    )
+  }
+
+  return (
+    <div style={{ background: '#F8F9FA', borderRadius: 10, padding: 10, marginTop: 4, width: '100%' }}>
+      <div style={{ display: 'flex', gap: 4, marginBottom: 6 }}>
+        {[1, 2, 3, 4, 5].map((n) => (
+          <span key={n} onClick={() => setRating(n)} style={{ fontSize: 20, color: n <= rating ? '#FF6B00' : '#D3D1C7', cursor: 'pointer' }}>★</span>
+        ))}
+      </div>
+      <textarea
+        value={comment}
+        onChange={(e) => setComment(e.target.value)}
+        placeholder="Votre avis (facultatif)"
+        rows={2}
+        style={{ width: '100%', fontSize: 12, padding: '6px 8px', borderRadius: 6, border: `1px solid ${COLORS.border}`, boxSizing: 'border-box', fontFamily: 'inherit', resize: 'vertical' }}
+      />
+      {err && <p style={{ margin: '4px 0 0', fontSize: 11, color: '#C0392B' }}>{err}</p>}
+      <div style={{ display: 'flex', gap: 6, marginTop: 6 }}>
+        <button onClick={submit} disabled={busy} style={{ background: COLORS.orange, color: '#fff', border: 'none', borderRadius: 8, padding: '6px 12px', fontSize: 11, fontWeight: 600, opacity: busy ? 0.6 : 1 }}>
+          {busy ? 'Envoi…' : 'Envoyer'}
+        </button>
+        <button onClick={() => setOpen(false)} style={{ background: 'transparent', border: 'none', color: COLORS.textFaint, fontSize: 11 }}>Annuler</button>
+      </div>
+    </div>
+  )
+}
 function TrackingScreen({ total, deliveryType, expressDistanceKm, villeName, onNewOrder }) {
 const isExpress = deliveryType === 'express'
 const isExpedition = deliveryType === 'expedition'
