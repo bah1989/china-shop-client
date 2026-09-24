@@ -501,7 +501,19 @@ function ProductDetailModal({ product, cartQty, onClose, onAdd }) {
 const [qty, setQty] = useState(1)
 const [imgIndex, setImgIndex] = useState(0)
 const [fullscreen, setFullscreen] = useState(false)
+const [reviews, setReviews] = useState([])
 const images = product.image_urls?.length ? product.image_urls : (product.image_url ? [product.image_url] : [])
+
+useEffect(() => {
+  fetch(`${FUNCTIONS_URL}/reviews-api`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'list_product_reviews', payload: { product_id: product.id, limit: 5 } }) })
+    .then((r) => r.json())
+    .then((d) => setReviews(d.reviews || []))
+    .catch(() => {})
+}, [product.id])
+
+
+
+
 return (
 <div
 onClick={onClose}
