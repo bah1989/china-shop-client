@@ -44,6 +44,20 @@ const [trustStats, setTrustStats] = useState(null)
 
 useEffect(() => {
 async function init() {
+try {
+  let sid = localStorage.getItem('china-shop-sid')
+  if (!sid) {
+    sid = Math.random().toString(36).slice(2) + Date.now().toString(36)
+    localStorage.setItem('china-shop-sid', sid)
+  }
+  const ua = navigator.userAgent
+  const deviceType = /Mobi|Android|iPhone/i.test(ua) ? 'mobile' : 'desktop'
+  fetch(`${FUNCTIONS_URL}/track-visit`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ session_id: sid, path: window.location.pathname + window.location.search, referrer: document.referrer, user_agent: ua, device_type: deviceType }),
+  }).catch(() => {})
+} catch (e) {}
 const { data: cData } = await supabase.from('communes').select('*').order('name')
 setCommunes(cData || [])
 setCommune(cData?.[0] || null)
