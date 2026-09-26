@@ -126,7 +126,19 @@ return products.filter((p) => p.name.toLowerCase().includes(q) || (p.description
 }, [products, search])
 function addToCart(productId, qty = 1) {
 setCart((c) => ({ ...c, [productId]: (c[productId] || 0) + qty }))
+if (window.fbq) {
+  const p = products.find((x) => x.id === productId)
+  window.fbq('track', 'AddToCart', {
+    content_ids: [productId],
+    content_name: p?.name,
+    content_type: 'product',
+    value: p ? p.wholesale_price * qty : undefined,
+    currency: 'XOF',
+  })
 }
+}
+
+
 function decFromCart(productId) {
 setCart((c) => {
 const next = { ...c }
