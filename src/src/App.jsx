@@ -231,7 +231,16 @@ status: 'ACCEPTED',
 })
 const result = await resp.json()
 if (result.error) throw new Error(result.error)
+if (window.fbq) {
+  window.fbq('track', 'Purchase', {
+    value: calc.total,
+    currency: 'XOF',
+    content_ids: cartLines.map((l) => l.product.id),
+    num_items: itemsCount,
+  })
+}
 setOrder({ id: newOrder.id, total: calc.total, deliveryType, expressDistanceKm: calc.expressDistanceKm, villeName: ville?.name })
+
 setView('tracking')
 setCart({})
 setDeliveryType('standard')
