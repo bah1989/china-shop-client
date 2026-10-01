@@ -122,6 +122,7 @@ if (productIdFromUrl) {
     setSelectedProduct(found)
     window.history.replaceState(null, '', window.location.pathname)
     window.history.pushState({ product: found.id }, '', `?p=${found.id}`)
+    trackFunnel('product_view', found.id)
   }
 }
 
