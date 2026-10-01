@@ -181,6 +181,7 @@ return products.filter((p) => p.name.toLowerCase().includes(q) || (p.description
 }, [products, search])
 function addToCart(productId, qty = 1) {
 setCart((c) => ({ ...c, [productId]: (c[productId] || 0) + qty }))
+trackFunnel('add_to_cart', productId)
 if (window.fbq) {
   const p = products.find((x) => x.id === productId)
   window.fbq('track', 'AddToCart', {
