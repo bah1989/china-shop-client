@@ -329,7 +329,23 @@ Chargement de China Shop…
 }
 return (
 <div style={{ minHeight: '100vh', background: COLORS.bg }}>
+<style>{`
+@keyframes slideDownToast {
+  from { transform: translateX(-50%) translateY(-24px); opacity: 0; }
+  to { transform: translateX(-50%) translateY(0); opacity: 1; }
+}
+@keyframes slideUpModal {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+@keyframes priceFlash {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.18); color: #FF6B00; }
+  100% { transform: scale(1); }
+}
+`}</style>
 <div style={{ maxWidth: 420, margin: '0 auto', minHeight: '100vh', background: COLORS.bg, position: 'relative', paddingBottom: 24 }}>
+
 
 {toast && (
   <div
