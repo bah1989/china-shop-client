@@ -906,11 +906,14 @@ style={{ width: '100%', fontSize: 13, padding: '10px 12px', borderRadius: 10, bo
 {l.product.image_url && (
 <img src={l.product.image_url} alt={l.product.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
 )}
-</div>
 <div style={{ flex: 1 }}>
 <p style={{ margin: '0 0 2px', fontSize: 13 }}>{l.product.name}</p>
-<p style={{ margin: 0, fontSize: 13, fontWeight: 600, color: COLORS.emerald }}>{l.unit.toLocaleString('fr-FR')} FCFA</p>
+<p key={l.unit} style={{ margin: 0, fontSize: 13, fontWeight: 600, color: COLORS.emerald, display: 'inline-block', animation: 'priceFlash 0.5s ease-out' }}>{l.unit.toLocaleString('fr-FR')} FCFA</p>
 </div>
+
+
+
+
 <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13 }}>
 <span onClick={() => decFromCart(l.product.id)} style={{ width: 22, height: 22, borderRadius: '50%', border: '1px solid #D3D1C7', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>−</span>
 <span>{l.qty}</span>
