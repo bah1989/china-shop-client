@@ -461,13 +461,30 @@ return (
 </div>
 )
 }
-function TopBar({ communes, commune, setCommune, onMyOrders }) {
+
+function TopBar({ communes, commune, setCommune, onMyOrders, itemsCount, onCartClick }) {
   return (
     <div style={{ background: COLORS.card, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 16px', borderBottom: `1px solid ${COLORS.border}` }}>
       <span style={{ fontSize: 16, fontWeight: 600, color: COLORS.emerald }}>China Shop</span>
       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
       <span onClick={onMyOrders} style={{ fontSize: 12, color: COLORS.emerald, fontWeight: 600, cursor: 'pointer' }}>📦 Mes commandes</span>
+      <span onClick={onCartClick} style={{ position: 'relative', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={COLORS.emerald} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="9" cy="21" r="1" /><circle cx="20" cy="21" r="1" />
+          <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6" />
+        </svg>
+        {itemsCount > 0 && (
+          <span style={{ position: 'absolute', top: -7, right: -8, background: COLORS.orange, color: '#fff', fontSize: 10, fontWeight: 700, borderRadius: 999, minWidth: 16, height: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 3px' }}>
+            {itemsCount}
+          </span>
+        )}
+      </span>
       {communes.length > 0 && (
+    
+      
+      
+      
+      
 <select
 value={commune?.id || ''}
 onChange={(e) => setCommune(communes.find((c) => c.id === e.target.value))}
