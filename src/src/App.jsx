@@ -183,7 +183,14 @@ return products.filter((p) => p.name.toLowerCase().includes(q) || (p.description
 function addToCart(productId, qty = 1) {
 setCart((c) => ({ ...c, [productId]: (c[productId] || 0) + qty }))
 trackFunnel('add_to_cart', productId)
+const addedProduct = products.find((x) => x.id === productId)
+setToast({ name: addedProduct?.name || 'Article' })
+if (toastTimerRef.current) clearTimeout(toastTimerRef.current)
+toastTimerRef.current = setTimeout(() => setToast(null), 3000)
 if (window.fbq) {
+
+
+
   const p = products.find((x) => x.id === productId)
   window.fbq('track', 'AddToCart', {
     content_ids: [productId],
