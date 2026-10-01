@@ -336,6 +336,7 @@ total={total}
 addToCart={addToCart}
 goCart={() => {
   setView('cart')
+  trackFunnel('checkout_start')
   if (window.fbq) window.fbq('track', 'InitiateCheckout', { value: total, currency: 'XOF', num_items: itemsCount })
 }}
 search={search}
