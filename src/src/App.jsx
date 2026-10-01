@@ -328,8 +328,9 @@ Chargement de China Shop…
 )
 }
 return (
-<div style={{ minHeight: '100vh', background: COLORS.
+<div style={{ minHeight: '100vh', background: COLORS.bg }}>
 <div style={{ maxWidth: 420, margin: '0 auto', minHeight: '100vh', background: COLORS.bg, position: 'relative', paddingBottom: 24 }}>
+
 {toast && (
   <div
     onClick={() => { setView('cart'); trackFunnel('checkout_start'); setToast(null) }}
