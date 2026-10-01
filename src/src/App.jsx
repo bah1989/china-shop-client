@@ -90,6 +90,8 @@ const [selectedProduct, setSelectedProduct] = useState(null)
 const [deliveryPhone, setDeliveryPhone] = useState('')
 const [deliveryAddress, setDeliveryAddress] = useState('')
 const [trustStats, setTrustStats] = useState(null)
+const [toast, setToast] = useState(null)
+const toastTimerRef = useRef(null)
 
 useEffect(() => {
 async function init() {
