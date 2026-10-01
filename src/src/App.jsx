@@ -487,7 +487,7 @@ Plus vous achetez groupé, plus le prix et la livraison s'effondrent
 {products.map((p) => (
 <div
 key={p.id}
-onClick={() => { setSelectedProduct(p); window.history.pushState({ product: p.id }, '', `?p=${p.id}`) }}
+onClick={() => { setSelectedProduct(p); window.history.pushState({ product: p.id }, '', `?p=${p.id}`); trackFunnel('product_view', p.id) }}
 style={{ background: COLORS.card, borderRadius: 16, border: `1px solid ${COLORS.border}`, padding: 10, cursor: 'pointer', minWidth: 0, overflow: 'hidden' }}
 >
 
