@@ -319,8 +319,17 @@ Chargement de China Shop…
 )
 }
 return (
-<div style={{ minHeight: '100vh', background: COLORS.bg }}>
+<div style={{ minHeight: '100vh', background: COLORS.
 <div style={{ maxWidth: 420, margin: '0 auto', minHeight: '100vh', background: COLORS.bg, position: 'relative', paddingBottom: 24 }}>
+{toast && (
+  <div
+    onClick={() => { setView('cart'); trackFunnel('checkout_start'); setToast(null) }}
+    style={{ position: 'fixed', top: 16, left: '50%', transform: 'translateX(-50%)', zIndex: 60, background: '#173404', color: '#fff', borderRadius: 14, padding: '12px 18px', display: 'flex', alignItems: 'center', gap: 10, boxShadow: '0 10px 30px rgba(0,0,0,0.3)', cursor: 'pointer', maxWidth: 380, width: 'calc(100% - 32px)' }}
+  >
+    <span style={{ fontSize: 20 }}>✔</span>
+    <span style={{ fontSize: 13, flex: 1, lineHeight: 1.4 }}>{toast.name} ajouté — <b style={{ textDecoration: 'underline' }}>Voir mon panier →</b></span>
+  </div>
+)}
 {error && (
 <div style={{ background: '#FFF3E0', color: '#8A4B00', fontSize: 12, padding: '10px 16px', borderBottom: `1px solid ${COLORS.border}` }}>
 {error}
