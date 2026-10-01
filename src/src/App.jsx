@@ -286,6 +286,7 @@ status: 'ACCEPTED',
 })
 const result = await resp.json()
 if (result.error) throw new Error(result.error)
+trackFunnel('order_completed')
 if (window.fbq) {
   window.fbq('track', 'Purchase', {
     value: calc.total,
