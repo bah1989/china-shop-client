@@ -21,7 +21,56 @@ if (itemsCount === 2) return { deliveryFee: 1000, useWholesale: true, label: 'Pr
 if (itemsCount <= 4) return { deliveryFee: 500, useWholesale: true, label: 'Livraison à 500 FCFA. Encore un peu pour la livraison gratuite' }
 return { deliveryFee: 0, useWholesale: true, label: 'Statut VIP débloqué. Livraison 100% gratuite' }
 }
+
+function getOrCreateSessionId() {
+  let sid = localStorage.getItem('china-shop-sid')
+  if (!sid) {
+    sid = Math.random().toString(36).slice(2) + Date.now().toString(36)
+    localStorage.setItem('china-shop-sid', sid)
+  }
+  return sid
+}
+
+function getAcquisitionData() {
+  const stored = sessionStorage.getItem('china-shop-utm')
+  if (stored) return JSON.parse(stored)
+  const params = new URLSearchParams(window.location.search)
+  const acq = {
+    utm_source: params.get('utm_source') || 'direct',
+    utm_medium: params.get('utm_medium') || null,
+    utm_campaign: params.get('utm_campaign') || null,
+  }
+  sessionStorage.setItem('china-shop-utm', JSON.stringify(acq))
+  return acq
+}
+
+function trackFunnel(eventType, productId = null) {
+  try {
+    const acq = getAcquisitionData()
+    const ua = navigator.userAgent
+    const deviceType = /Mobi|Android|iPhone/i.test(ua) ? 'mobile' : 'desktop'
+    fetch(`${FUNCTIONS_URL}/track-visit`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        session_id: getOrCreateSessionId(),
+        path: window.location.pathname + window.location.search,
+        referrer: document.referrer,
+        user_agent: ua,
+        device_type: deviceType,
+        event_type: eventType,
+        product_id: productId,
+        utm_source: acq.utm_source,
+        utm_medium: acq.utm_medium,
+        utm_campaign: acq.utm_campaign,
+      }),
+    }).catch(() => {})
+  } catch (e) {}
+}
+
 export default function App() {
+
+
 const [view, setView] = useState('catalog')
 const [session, setSession] = useState(null)
 const [ready, setReady] = useState(false)
