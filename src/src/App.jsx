@@ -177,11 +177,23 @@ return { product: p, qty, unit, lineTotal: unit * qty }
 }, [cart, products, tier.useWholesale])
 const subtotal = cartLines.reduce((sum, l) => sum + l.lineTotal, 0)
 const total = subtotal + tier.deliveryFee
+const categories = useMemo(() => {
+const set = new Set()
+products.forEach((p) => { if (p.category) set.add(p.category) })
+return Array.from(set).sort()
+}, [products])
 const filteredProducts = useMemo(() => {
 const q = search.trim().toLowerCase()
-if (!q) return products
-return products.filter((p) => p.name.toLowerCase().includes(q) || (p.description || '').toLowerCase().includes(q))
-}, [products, search])
+return products.filter((p) => {
+const matchesSearch = !q || p.name.toLowerCase().includes(q) || (p.description || '').toLowerCase().includes(q)
+const matchesCategory = selectedCategory === 'all' || p.category === selectedCategory
+return matchesSearch && matchesCategory
+})
+}, [products, search, selectedCategory])
+
+
+
+
 function addToCart(productId, qty = 1) {
 setCart((c) => ({ ...c, [productId]: (c[productId] || 0) + qty }))
 trackFunnel('add_to_cart', productId)
