@@ -404,10 +404,15 @@ products={filteredProducts}
   categories={categories}
 selectedCategory={selectedCategory}
 setSelectedCategory={setSelectedCategory}
+priceComparison={priceComparison}
 cart={cart}
 itemsCount={itemsCount}
 total={total}
 addToCart={addToCart}
+
+
+
+
 goCart={() => {
   setView('cart')
   trackFunnel('checkout_start')
