@@ -358,7 +358,16 @@ return (
   35% { transform: scale(1.18); color: #FF6B00; }
   100% { transform: scale(1); }
 }
+@keyframes scrollBanner {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
 `}</style>
+  
+  
+  
+
+
 <div style={{ maxWidth: 420, margin: '0 auto', minHeight: '100vh', background: COLORS.bg, position: 'relative', paddingBottom: 24 }}>
 
 
