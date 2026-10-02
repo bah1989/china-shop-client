@@ -528,7 +528,29 @@ style={{ border: 'none', outline: 'none', fontSize: 13, flex: 1, background: 'tr
 )}
 </div>
 </div>
+{categories.length > 0 && (
+<div style={{ display: 'flex', gap: 8, overflowX: 'auto', padding: '10px 12px 0', WebkitOverflowScrolling: 'touch' }}>
+<span
+onClick={() => setSelectedCategory('all')}
+style={{ flexShrink: 0, fontSize: 12, fontWeight: 600, padding: '6px 14px', borderRadius: 999, cursor: 'pointer', whiteSpace: 'nowrap', background: selectedCategory === 'all' ? COLORS.emerald : '#fff', color: selectedCategory === 'all' ? '#fff' : COLORS.textMuted, border: `1px solid ${selectedCategory === 'all' ? COLORS.emerald : COLORS.border}` }}
+>
+Tout
+</span>
+{categories.map((cat) => (
+<span
+key={cat}
+onClick={() => setSelectedCategory(cat)}
+style={{ flexShrink: 0, fontSize: 12, fontWeight: 600, padding: '6px 14px', borderRadius: 999, cursor: 'pointer', whiteSpace: 'nowrap', background: selectedCategory === cat ? COLORS.emerald : '#fff', color: selectedCategory === cat ? '#fff' : COLORS.textMuted, border: `1px solid ${selectedCategory === cat ? COLORS.emerald : COLORS.border}` }}
+>
+{cat}
+</span>
+))}
+</div>
+)}
 <div style={{ margin: 12, background: COLORS.emerald, borderRadius: 14, padding: '12px 14px' }}>
+
+
+
 <p style={{ margin: 0, fontSize: 13, fontWeight: 500, color: '#EAF3DE', lineHeight: 1.5 }}>
 Plus vous achetez groupé, plus le prix et la livraison s'effondrent
 </p>
