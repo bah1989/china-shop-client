@@ -536,10 +536,25 @@ style={{ background: '#F1F3F1', border: 'none', borderRadius: 20, padding: '6px 
 </div>
 )
 }
- function CatalogScreen({ communes, commune, setCommune, products, categories, selectedCategory, setSelectedCategory, cart, itemsCount, total, addToCart, goCart, search, setSearch, selectedProduct, setSelectedProduct, onMyOrders, trustStats }) {
+ function CatalogScreen({ communes, commune, setCommune, products, categories, selectedCategory, setSelectedCategory, priceComparison, cart, itemsCount, total, addToCart, goCart, search, setSearch, selectedProduct, setSelectedProduct, onMyOrders, trustStats }) {
   return (
     <div>
       <TopBar communes={communes} commune={commune} setCommune={setCommune} onMyOrders={onMyOrders} itemsCount={itemsCount} onCartClick={goCart} />
+      {priceComparison && (
+        <div style={{ background: '#173404', overflow: 'hidden', whiteSpace: 'nowrap', padding: '8px 0' }}>
+          <div style={{ display: 'inline-block', animation: 'scrollBanner 18s linear infinite' }}>
+            <span style={{ fontSize: 12, color: '#fff', fontWeight: 600, paddingRight: 48 }}>
+              🏷️ {priceComparison.productName} — China Shop {priceComparison.ourPrice.toLocaleString('fr-FR')} FCFA · Jumia {priceComparison.jumiaPrice ? priceComparison.jumiaPrice.toLocaleString('fr-FR') + ' FCFA' : '—'} · Ailleurs sur le net {priceComparison.webPrice ? priceComparison.webPrice.toLocaleString('fr-FR') + ' FCFA' : '—'} · vérifié le {new Date(priceComparison.verifiedAt).toLocaleDateString('fr-FR')}
+            </span>
+            <span style={{ fontSize: 12, color: '#fff', fontWeight: 600, paddingRight: 48 }}>
+              🏷️ {priceComparison.productName} — China Shop {priceComparison.ourPrice.toLocaleString('fr-FR')} FCFA · Jumia {priceComparison.jumiaPrice ? priceComparison.jumiaPrice.toLocaleString('fr-FR') + ' FCFA' : '—'} · Ailleurs sur le net {priceComparison.webPrice ? priceComparison.webPrice.toLocaleString('fr-FR') + ' FCFA' : '—'} · vérifié le {new Date(priceComparison.verifiedAt).toLocaleDateString('fr-FR')}
+            </span>
+          </div>
+        </div>
+      )}
+  
+  
+      
   
     
       
