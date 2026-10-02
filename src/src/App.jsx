@@ -842,7 +842,7 @@ Comment l'utiliser ↗
 <div style={{ marginTop: 16, background: COLORS.card, border: `1px solid ${COLORS.border}`, borderRadius: 14, padding: 14 }}>
 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
 <span style={{ fontSize: 12, color: COLORS.textMuted }}>Prix de détail</span>
-<span style={{ fontSize: 14, color: COLORS.textFaint, textDecoration: 'line-through' }}>{product.retail_price.toLocaleString('fr-FR')} FCFA</span>
+<span style={{ fontSize: 14, color: COLORS.textFaint }}>{product.retail_price.toLocaleString('fr-FR')} FCFA</span>
 </div>
 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
 <span style={{ fontSize: 12, color: COLORS.emerald, fontWeight: 600 }}>Prix de gros (dès 2 articles)</span>
