@@ -686,7 +686,7 @@ Comment l'utiliser ↗
 <div style={{ marginTop: 4 }}>
 <div style={{ display: 'flex', alignItems: 'baseline', gap: 4 }}>
 <span style={{ fontSize: 9.5, color: COLORS.textFaint }}>Détail</span>
-<span style={{ fontSize: 11, color: COLORS.textFaint, textDecoration: 'line-through' }}>{p.retail_price.toLocaleString('fr-FR')} FCFA</span>
+<span style={{ fontSize: 11, color: COLORS.textFaint }}>{p.retail_price.toLocaleString('fr-FR')} FCFA</span>
 </div>
 <div style={{ display: 'flex', alignItems: 'baseline', gap: 4 }}>
 <span style={{ fontSize: 9.5, color: COLORS.emerald, fontWeight: 600 }}>Gros</span>
