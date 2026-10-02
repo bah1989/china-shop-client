@@ -118,6 +118,13 @@ fetch(`${FUNCTIONS_URL}/reviews-api`, { method: 'POST', headers: { 'Content-Type
   .then((r) => r.json())
   .then(setTrustStats)
   .catch(() => {})
+fetch(`${FUNCTIONS_URL}/price-comparison`, { method: 'POST', headers: { 'Content-Type': 'application/json' } })
+  .then((r) => r.json())
+  .then((d) => { if (d.active) setPriceComparison(d) })
+  .catch(() => {})
+  
+  
+  
 
 const params = new URLSearchParams(window.location.search)
 const productIdFromUrl = params.get('p')
