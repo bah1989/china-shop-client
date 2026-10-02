@@ -93,6 +93,9 @@ const [trustStats, setTrustStats] = useState(null)
 const [toast, setToast] = useState(null)
 const toastTimerRef = useRef(null)
 const [selectedCategory, setSelectedCategory] = useState('all')
+const [priceComparison, setPriceComparison] = useState(null)
+
+
 
 
 
