@@ -499,10 +499,13 @@ style={{ background: '#F1F3F1', border: 'none', borderRadius: 20, padding: '6px 
 </div>
 )
 }
-function CatalogScreen({ communes, commune, setCommune, products, cart, itemsCount, total, addToCart, goCart, search, setSearch, selectedProduct, setSelectedProduct, onMyOrders, trustStats }) {
+ function CatalogScreen({ communes, commune, setCommune, products, categories, selectedCategory, setSelectedCategory, cart, itemsCount, total, addToCart, goCart, search, setSearch, selectedProduct, setSelectedProduct, onMyOrders, trustStats }) {
   return (
     <div>
       <TopBar communes={communes} commune={commune} setCommune={setCommune} onMyOrders={onMyOrders} itemsCount={itemsCount} onCartClick={goCart} />
+  
+    
+      
       {trustStats && trustStats.deliveredCount > 0 && (
         <div style={{ margin: '10px 12px 0', background: '#EAF3DE', borderRadius: 12, padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 8 }}>
           <span style={{ fontSize: 16 }}>✅</span>
