@@ -112,11 +112,23 @@ setCommunes(cData || [])
 setCommune(cData?.[0] || null)
 const { data: vData } = await supabase.from('villes').select('*').eq('is_active', true).order('name')
 setVilles(vData || [])
+
 const { data: pData } = await supabase.from('products').select('*').eq('is_active', true).order('created_at')
 const { data: statsData } = await supabase.from('product_review_stats').select('*')
 const statsMap = {}
 ;(statsData || []).forEach((s) => { statsMap[s.product_id] = s })
-setProducts((pData || []).map((p) => ({ ...p, avgRating: statsMap[p.id]?.avg_rating || null, reviewCount: statsMap[p.id]?.review_count || 0 })))
+let viewCounts = {}
+try {
+  const vcResp = await fetch(`${FUNCTIONS_URL}/product-view-counts`, { method: 'POST' })
+  const vcJson = await vcResp.json()
+  viewCounts = vcJson.counts || {}
+} catch (e) {}
+const merged = (pData || []).map((p) => ({ ...p, avgRating: statsMap[p.id]?.avg_rating || null, reviewCount: statsMap[p.id]?.review_count || 0, viewCount: viewCounts[p.id] || 0 }))
+merged.sort((a, b) => b.viewCount - a.viewCount)
+setProducts(merged)
+
+
+
 fetch(`${FUNCTIONS_URL}/reviews-api`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'trust_stats' }) })
   .then((r) => r.json())
   .then(setTrustStats)
